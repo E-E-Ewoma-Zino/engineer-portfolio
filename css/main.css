@@ -83,7 +83,11 @@ a { color: inherit; }
   pointer-events: none; user-select: none;
 }
 
-.q-node { position: absolute; width: 440px; text-align: center; }
+.q-node {
+  position: absolute; width: 440px; text-align: center; z-index: 40;
+  background: rgba(250, 249, 245, 0.94); border-radius: 10px;
+  padding: 22px 26px; box-sizing: border-box;
+}
 .q-node h2 { font-family: var(--serif); font-weight: 400; font-size: 46px; line-height: 1.15; margin-bottom: 12px; }
 .q-node h2 a { text-decoration: none; }
 .q-node h2 a:hover { font-style: italic; }

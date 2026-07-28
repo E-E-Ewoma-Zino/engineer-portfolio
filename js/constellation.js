@@ -37,12 +37,27 @@
   giants[1].style.top = (H - 300) + 'px';
 
   var picks = {
-    house: [2, 3, 5, 7, 8, 10, 11, 12, 13, 14, 22, 23, 26, 28, 29, 32, 38, 40, 42],
-    wind:  [3, 4, 5, 7, 9, 10, 12, 14, 18, 19, 22, 23, 25, 27, 29, 32, 36, 37, 38, 39, 41, 42, 53, 56],
-    pvt:   [2, 3, 5, 6, 7, 11, 13, 16, 19, 20, 25, 26, 28, 30, 32, 33, 36, 37, 41, 43, 44, 47, 61, 62]
+    house: [2, 3, 5, 7, 10, 11, 12, 13, 14, 22, 28, 29, 32, 38, 40, 42],
+    wind:  [3, 4, 7, 9, 10, 12, 14, 18, 22, 25, 27, 29, 32, 37, 38, 39, 42],
+    pvt:   [2, 3, 5, 6, 13, 16, 25, 30, 32, 33, 36, 37, 41, 43, 44, 61, 62]
   };
 
   function rand(seed) { var x = Math.sin(seed * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
+
+  /* No-go rectangles measured from the real text blocks (plus breathing room). */
+  var keepOut = [];
+  var PAD = 34;
+  document.querySelectorAll('.q-node, .giant').forEach(function (el) {
+    keepOut.push({ x: el.offsetLeft - PAD, y: el.offsetTop - PAD, w: el.offsetWidth + PAD * 2, h: el.offsetHeight + PAD * 2 });
+  });
+
+  function hitsKeepOut(cx, cy, half) {
+    for (var j = 0; j < keepOut.length; j++) {
+      var r = keepOut[j];
+      if (cx + half > r.x && cx - half < r.x + r.w && cy + half > r.y && cy - half < r.y + r.h) return true;
+    }
+    return false;
+  }
 
   var frag = document.createDocumentFragment();
   var lines = [];
@@ -52,12 +67,26 @@
     picks[key].forEach(function (n, i) {
       var count = picks[key].length;
       var angle = (i / count) * Math.PI * 2 + rand(ki * 100 + i) * 0.9 + ki;
-      var spread = 0.12 + rand(ki * 37 + i * 7) * 0.19;
+      var spread = 0.15 + rand(ki * 37 + i * 7) * 0.18;
+      var size = 44 + Math.floor(rand(ki * 53 + i * 13) * 46);
       var cx = a.x + Math.cos(angle) * spread * W * 0.62;
       var cy = a.y + Math.sin(angle) * spread * H * 0.92;
-      cx = Math.max(36, Math.min(W - 140, cx));
-      cy = Math.max(40, Math.min(H - 150, cy));
-      var size = 54 + Math.floor(rand(ki * 53 + i * 13) * 58);
+      /* Walk outward along the scatter angle until clear of every text block. */
+      var half = size / 2 + 12;
+      for (var t = 0; t < 60 && hitsKeepOut(cx, cy, half); t++) {
+        cx += Math.cos(angle) * 26;
+        cy += Math.sin(angle) * 26 * (H / W) * 1.6;
+      }
+      cx = Math.max(34, Math.min(W - 120, cx));
+      cy = Math.max(38, Math.min(H - 130, cy));
+      /* Edge-trapped? Walk toward the canvas centre instead. */
+      if (hitsKeepOut(cx, cy, half)) {
+        var back = Math.atan2(H / 2 - cy, W / 2 - cx);
+        for (var t2 = 0; t2 < 80 && hitsKeepOut(cx, cy, half); t2++) {
+          cx += Math.cos(back) * 24;
+          cy += Math.sin(back) * 24;
+        }
+      }
 
       var tile = document.createElement('a');
       tile.className = 'tile';
