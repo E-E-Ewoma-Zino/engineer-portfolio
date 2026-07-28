@@ -183,8 +183,13 @@ body.card-open #card-backdrop {
 /* mobile home fallback */
 #mobile-home { display: none; }
 @media (max-width: 760px) {
-  #cosmos-wrap, .hud { display: none; }
-  #mobile-home { display: block; padding: 110px 24px 60px; }
+  #cosmos-wrap, .hud, .hud.zoom, .hud.hint, #preview-card, #card-backdrop { display: none; }
+  .top { padding: 14px 18px; flex-wrap: wrap; gap: 4px 14px; }
+  .top .brand { white-space: nowrap; }
+  .top .brand strong { font-size: 15px; }
+  .top nav { gap: 14px; font-size: 13px; flex-wrap: wrap; }
+  .top nav a { white-space: nowrap; }
+  #mobile-home { display: block; padding: 120px 24px 60px; }
   #mobile-home .lede { font-family: var(--serif); font-size: 42px; line-height: 1.1; margin-bottom: 36px; }
   .m-q { display: block; text-decoration: none; border-top: 1px solid var(--hair); padding: 26px 0; }
   .m-q h2 { font-family: var(--serif); font-size: 24px; font-weight: 400; margin-bottom: 6px; }
