@@ -46,7 +46,17 @@
   </div>
 </div>
 
-<div class="hud hint">Click an image to open its project</div>
+<div class="hud hint">Click an image to read more</div>
+
+<div id="card-backdrop"></div>
+<aside id="preview-card" hidden aria-modal="true" role="dialog" aria-label="Project preview">
+  <button class="pc-close" aria-label="Close preview">&times;</button>
+  <img class="pc-img" src="" alt="">
+  <p class="pc-kicker"></p>
+  <h3 class="pc-title"></h3>
+  <p class="pc-blurb"></p>
+  <a class="pc-go" href="#">Open the project &rarr;</a>
+</aside>
 <div class="hud zoom">
   <span>Zoom</span>
   <button id="z-in" aria-label="Zoom in">+</button>

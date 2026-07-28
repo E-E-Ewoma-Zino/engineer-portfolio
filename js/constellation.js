@@ -46,13 +46,15 @@
       var tile = document.createElement('a');
       tile.className = 'tile';
       tile.href = a.href;
+      tile.dataset.project = key;
+      tile.dataset.img = 'assets/img/' + a.dir + '/thumbs/image' + n + '.jpg';
       tile.style.left = (cx - size / 2) + 'px';
       tile.style.top = (cy - size / 2) + 'px';
       tile.style.width = size + 'px';
       tile.style.height = size + 'px';
-      tile.setAttribute('aria-label', 'Open project');
+      tile.setAttribute('aria-label', 'Preview project');
       var img = document.createElement('img');
-      img.src = 'assets/img/' + a.dir + '/thumbs/image' + n + '.jpg';
+      img.src = tile.dataset.img;
       img.alt = '';
       img.loading = 'lazy';
       tile.appendChild(img);
@@ -102,13 +104,27 @@
     apply();
   }
 
-  wrap.addEventListener('wheel', function (e) {
-    e.preventDefault();
-    zoomAt(e.clientX, e.clientY, e.deltaY < 0 ? 1.12 : 0.89);
-  }, { passive: false });
-
+  /* Wheel does NOT zoom (matches the reference flow) — zoom lives in the buttons only. */
   document.getElementById('z-in').addEventListener('click', function () { zoomAt(vw / 2, vh / 2, 1.28); });
   document.getElementById('z-out').addEventListener('click', function () { zoomAt(vw / 2, vh / 2, 0.78); });
+
+  /* Pinch zoom on touch devices */
+  var pinch = null;
+  wrap.addEventListener('touchstart', function (e) {
+    if (e.touches.length === 2) {
+      pinch = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+    }
+  }, { passive: true });
+  wrap.addEventListener('touchmove', function (e) {
+    if (pinch && e.touches.length === 2) {
+      var d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+      var cx = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+      var cy = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+      zoomAt(cx, cy, d / pinch);
+      pinch = d;
+    }
+  }, { passive: true });
+  wrap.addEventListener('touchend', function () { pinch = null; });
 
   var drag = null;
   wrap.addEventListener('pointerdown', function (e) {
@@ -125,6 +141,47 @@
   });
   wrap.addEventListener('pointerup', function () { drag = null; wrap.classList.remove('dragging'); });
   wrap.addEventListener('pointercancel', function () { drag = null; wrap.classList.remove('dragging'); });
+
+  /* ---- click a tile -> preview card (reference flow) ---- */
+  var meta = {
+    house: { kicker: 'Question 01 — Solar power engineering', title: 'Can a house heat itself?', blurb: 'A passive solar house for London: AutoCAD design, Polysun proof, 64.6% annual solar fraction.', href: 'house.html' },
+    wind:  { kicker: 'Question 02 — Wind power engineering', title: 'Can wind pay for an island?', blurb: 'Five Vestas V150s at Quanterness, Orkney: siting to £32.5M NPV, with the real WindPRO layers on a live map.', href: 'wind.html' },
+    pvt:   { kicker: 'Question 03 — MSc dissertation', title: 'Why do solar panels hate the sun?', blurb: 'A water-cooled PVT panel designed in SOLIDWORKS and proven with CFD — electricity and heat from the same square metre.', href: 'pvt.html' }
+  };
+  var card = document.getElementById('preview-card');
+  var cardImg = card.querySelector('.pc-img');
+  var cardKicker = card.querySelector('.pc-kicker');
+  var cardTitle = card.querySelector('.pc-title');
+  var cardBlurb = card.querySelector('.pc-blurb');
+  var cardGo = card.querySelector('.pc-go');
+
+  function openCard(project, imgSrc) {
+    var m = meta[project];
+    cardImg.src = imgSrc;
+    cardKicker.textContent = m.kicker;
+    cardTitle.textContent = m.title;
+    cardBlurb.textContent = m.blurb;
+    cardGo.href = m.href;
+    document.body.classList.add('card-open');
+    card.hidden = false;
+    if (window.gsap) {
+      gsap.fromTo(card, { opacity: 0, y: 18, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: 'power2.out' });
+    }
+    cardGo.focus({ preventScroll: true });
+  }
+  function closeCard() {
+    document.body.classList.remove('card-open');
+    card.hidden = true;
+  }
+  cosmos.addEventListener('click', function (e) {
+    var tile = e.target.closest('.tile');
+    if (!tile) return;
+    e.preventDefault();
+    openCard(tile.dataset.project, tile.dataset.img);
+  });
+  card.querySelector('.pc-close').addEventListener('click', closeCard);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeCard(); });
+  document.getElementById('card-backdrop').addEventListener('click', closeCard);
 
   /* gentle drift-in on load */
   if (window.gsap) {
