@@ -83,14 +83,14 @@ a { color: inherit; }
   pointer-events: none; user-select: none;
 }
 
-.q-node { position: absolute; width: 300px; text-align: center; }
-.q-node h2 { font-family: var(--serif); font-weight: 400; font-size: 27px; line-height: 1.25; margin-bottom: 8px; }
+.q-node { position: absolute; width: 440px; text-align: center; }
+.q-node h2 { font-family: var(--serif); font-weight: 400; font-size: 46px; line-height: 1.15; margin-bottom: 12px; }
 .q-node h2 a { text-decoration: none; }
 .q-node h2 a:hover { font-style: italic; }
-.q-node p { font-family: var(--sans); font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; }
+.q-node p { font-family: var(--sans); font-size: 24px; color: var(--ink-soft); line-height: 1.45; }
 .q-node .go {
-  display: inline-block; margin-top: 10px; font-family: var(--sans); font-size: 13px;
-  text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 1px;
+  display: inline-block; margin-top: 14px; font-family: var(--sans); font-size: 19px;
+  text-decoration: none; border-bottom: 1.5px solid var(--ink); padding-bottom: 2px;
 }
 .q-node .go:hover { border-color: transparent; }
 
