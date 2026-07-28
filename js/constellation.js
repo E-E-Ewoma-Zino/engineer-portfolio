@@ -1,25 +1,41 @@
-/* Constellation homepage: scattered project figures around three questions. */
+/* Constellation homepage: scattered project figures around three questions.
+   The canvas takes the viewer's screen aspect so the field fills edge to edge. */
 (function () {
   var wrap = document.getElementById('cosmos-wrap');
   if (!wrap || window.matchMedia('(max-width: 760px)').matches) return;
 
   var cosmos = document.getElementById('cosmos');
   var wires = document.getElementById('wires');
-  var W = 2400, H = 1600;
+  var vw = window.innerWidth, vh = window.innerHeight;
+
+  /* Canvas: fixed design width, height matched to the viewport aspect. */
+  var W = 2400;
+  var H = Math.round(Math.min(2200, Math.max(1100, W * vh / vw)));
   cosmos.style.width = W + 'px';
   cosmos.style.height = H + 'px';
   wires.setAttribute('width', W);
   wires.setAttribute('height', H);
   wires.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
 
-  /* Cluster anchors = centres of the question nodes (node width 300). */
+  /* Everything is placed by fractions of the canvas, like the reference. */
   var anchors = {
-    house: { x: 480, y: 900, href: 'house.html', dir: 'house' },
-    wind:  { x: 1210, y: 400, href: 'wind.html', dir: 'wind' },
-    pvt:   { x: 1850, y: 950, href: 'pvt.html', dir: 'pvt' }
+    house: { fx: 0.195, fy: 0.565, href: 'house.html', dir: 'house' },
+    wind:  { fx: 0.500, fy: 0.240, href: 'wind.html', dir: 'wind' },
+    pvt:   { fx: 0.775, fy: 0.590, href: 'pvt.html', dir: 'pvt' }
   };
+  Object.keys(anchors).forEach(function (k) {
+    var a = anchors[k];
+    a.x = a.fx * W; a.y = a.fy * H;
+    var el = document.getElementById('q-' + k);
+    el.style.left = (a.x - 220) + 'px';
+    el.style.top = (a.y - 100) + 'px';
+  });
+  var giants = document.querySelectorAll('.giant');
+  giants[0].style.left = (0.045 * W) + 'px';
+  giants[0].style.top = (0.055 * H) + 'px';
+  giants[1].style.left = (0.660 * W) + 'px';
+  giants[1].style.top = (H - 300) + 'px';
 
-  /* Hand-picked figures per project (docx media numbering). */
   var picks = {
     house: [2, 3, 5, 7, 8, 10, 11, 12, 13, 14, 22, 23, 26, 28, 29, 32, 38, 40, 42],
     wind:  [3, 4, 5, 7, 9, 10, 12, 14, 18, 19, 22, 23, 25, 27, 29, 32, 36, 37, 38, 39, 41, 42, 53, 56],
@@ -36,11 +52,11 @@
     picks[key].forEach(function (n, i) {
       var count = picks[key].length;
       var angle = (i / count) * Math.PI * 2 + rand(ki * 100 + i) * 0.9 + ki;
-      var radius = 210 + rand(ki * 37 + i * 7) * 320;
-      var cx = a.x + Math.cos(angle) * radius * 1.35;
-      var cy = a.y + Math.sin(angle) * radius * 0.78;
-      cx = Math.max(50, Math.min(W - 130, cx));
-      cy = Math.max(60, Math.min(H - 130, cy));
+      var spread = 0.12 + rand(ki * 37 + i * 7) * 0.19;
+      var cx = a.x + Math.cos(angle) * spread * W * 0.62;
+      var cy = a.y + Math.sin(angle) * spread * H * 0.92;
+      cx = Math.max(36, Math.min(W - 140, cx));
+      cy = Math.max(40, Math.min(H - 150, cy));
       var size = 54 + Math.floor(rand(ki * 53 + i * 13) * 58);
 
       var tile = document.createElement('a');
@@ -53,7 +69,6 @@
       tile.style.width = size + 'px';
       tile.style.height = size + 'px';
       tile.setAttribute('aria-label', 'Preview project');
-      /* desynchronised idle float, like the reference */
       tile.style.animationDuration = (4.5 + rand(ki * 91 + i * 17) * 4) + 's';
       tile.style.animationDelay = (-rand(ki * 71 + i * 29) * 8) + 's';
       var img = document.createElement('img');
@@ -76,19 +91,16 @@
     wires.appendChild(ln);
   });
 
-  /* ---- pan & zoom ---- */
-  var vw = window.innerWidth, vh = window.innerHeight;
-  var minScale = Math.min(vw / W, vh / H) * 0.98;
+  /* ---- pan & zoom: initial view fills the screen exactly ---- */
+  var minScale = vw / W;
   var scale = minScale;
-  var tx = (vw - W * scale) / 2, ty = (vh - H * scale) / 2;
+  var tx = 0, ty = (vh - H * scale) / 2;
   var maxScale = 1.6;
 
   function apply() {
     var s = Math.max(minScale * 0.85, Math.min(maxScale, scale));
     scale = s;
     var margin = 120 * s;
-    /* If the scaled canvas is smaller than the viewport on an axis, centre it there;
-       otherwise clamp panning so the content can't be dragged fully off-screen. */
     if (W * s <= vw) { tx = (vw - W * s) / 2; }
     else { tx = Math.min(margin, Math.max(vw - W * s - margin, tx)); }
     if (H * s <= vh) { ty = (vh - H * s) / 2; }
@@ -99,7 +111,7 @@
 
   window.addEventListener('resize', function () {
     vw = window.innerWidth; vh = window.innerHeight;
-    minScale = Math.min(vw / W, vh / H) * 0.98;
+    minScale = vw / W;
     apply();
   });
 
