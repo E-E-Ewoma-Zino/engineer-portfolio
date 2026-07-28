@@ -167,9 +167,9 @@
     cardGo.href = m.href;
     document.body.classList.add('card-open');
     card.hidden = false;
-    if (window.gsap) {
-      gsap.fromTo(card, { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'power2.out', clearProps: 'all' });
-    }
+    card.classList.remove('pop');
+    void card.offsetWidth; /* restart the CSS pop animation */
+    card.classList.add('pop');
     cardGo.focus({ preventScroll: true });
   }
   function closeCard() {
