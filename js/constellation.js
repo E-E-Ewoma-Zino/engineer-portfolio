@@ -53,6 +53,9 @@
       tile.style.width = size + 'px';
       tile.style.height = size + 'px';
       tile.setAttribute('aria-label', 'Preview project');
+      /* desynchronised idle float, like the reference */
+      tile.style.animationDuration = (4.5 + rand(ki * 91 + i * 17) * 4) + 's';
+      tile.style.animationDelay = (-rand(ki * 71 + i * 29) * 8) + 's';
       var img = document.createElement('img');
       img.src = tile.dataset.img;
       img.alt = '';
@@ -165,7 +168,7 @@
     document.body.classList.add('card-open');
     card.hidden = false;
     if (window.gsap) {
-      gsap.fromTo(card, { opacity: 0, y: 18, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: 'power2.out' });
+      gsap.fromTo(card, { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'power2.out', clearProps: 'all' });
     }
     cardGo.focus({ preventScroll: true });
   }
@@ -183,11 +186,11 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeCard(); });
   document.getElementById('card-backdrop').addEventListener('click', closeCard);
 
-  /* gentle drift-in on load */
+  /* gentle drift-in on load — opacity only, so it never fights the CSS float */
   if (window.gsap) {
-    gsap.from('.tile', { opacity: 0, scale: 0.6, duration: 0.9, ease: 'power2.out', stagger: { each: 0.012, from: 'random' } });
-    gsap.from('.giant', { opacity: 0, y: 24, duration: 1.1, ease: 'power2.out', stagger: 0.15 });
-    gsap.from('.q-node', { opacity: 0, y: 18, duration: 0.9, delay: 0.3, ease: 'power2.out', stagger: 0.12 });
-    gsap.from('#wires line', { opacity: 0, duration: 1.4, delay: 0.2, stagger: { each: 0.008, from: 'random' } });
+    gsap.from('.tile', { opacity: 0, duration: 0.8, ease: 'power1.out', stagger: { each: 0.015, from: 'random' }, clearProps: 'opacity' });
+    gsap.from('.giant', { opacity: 0, duration: 1.1, ease: 'power1.out', stagger: 0.15, clearProps: 'opacity' });
+    gsap.from('.q-node', { opacity: 0, duration: 0.9, delay: 0.3, ease: 'power1.out', stagger: 0.12, clearProps: 'opacity' });
+    gsap.from('#wires line', { opacity: 0, duration: 1.2, delay: 0.2, stagger: { each: 0.008, from: 'random' }, clearProps: 'opacity' });
   }
 })();
