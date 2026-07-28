@@ -61,6 +61,7 @@
 
   var frag = document.createDocumentFragment();
   var lines = [];
+  var placed = [];
 
   Object.keys(picks).forEach(function (key, ki) {
     var a = anchors[key];
@@ -71,22 +72,35 @@
       var size = 44 + Math.floor(rand(ki * 53 + i * 13) * 46);
       var cx = a.x + Math.cos(angle) * spread * W * 0.62;
       var cy = a.y + Math.sin(angle) * spread * H * 0.92;
-      /* Walk outward along the scatter angle until clear of every text block. */
-      var half = size / 2 + 12;
-      for (var t = 0; t < 60 && hitsKeepOut(cx, cy, half); t++) {
-        cx += Math.cos(angle) * 26;
-        cy += Math.sin(angle) * 26 * (H / W) * 1.6;
+      /* A spot is free when it clears every text block AND every placed tile (14px gap). */
+      var hs = size / 2;
+      function clampX(x) { return Math.max(34 + hs, Math.min(W - 120 - hs, x)); }
+      function clampY(y) { return Math.max(38 + hs, Math.min(H - 130 - hs, y)); }
+      function isFree(x, y) {
+        if (hitsKeepOut(x, y, hs + 12)) return false;
+        for (var p = 0; p < placed.length; p++) {
+          var q = placed[p];
+          if (Math.abs(x - q.x) < hs + q.hs + 14 && Math.abs(y - q.y) < hs + q.hs + 14) return false;
+        }
+        return true;
       }
-      cx = Math.max(34, Math.min(W - 120, cx));
-      cy = Math.max(38, Math.min(H - 130, cy));
-      /* Edge-trapped? Walk toward the canvas centre instead. */
-      if (hitsKeepOut(cx, cy, half)) {
-        var back = Math.atan2(H / 2 - cy, W / 2 - cx);
-        for (var t2 = 0; t2 < 80 && hitsKeepOut(cx, cy, half); t2++) {
-          cx += Math.cos(back) * 24;
-          cy += Math.sin(back) * 24;
+      /* Walk outward along the scatter angle first. */
+      for (var t = 0; t < 70 && !isFree(cx, cy); t++) {
+        cx += Math.cos(angle) * 24;
+        cy += Math.sin(angle) * 24 * (H / W) * 1.6;
+      }
+      cx = clampX(cx); cy = clampY(cy);
+      /* Still stuck (edge-trapped)? Sweep a golden spiral around the anchor. */
+      if (!isFree(cx, cy)) {
+        var golden = 2.399963;
+        for (var t2 = 1; t2 < 220 && !isFree(cx, cy); t2++) {
+          var rr = 34 * Math.sqrt(t2);
+          var aa = angle + t2 * golden;
+          cx = clampX(a.x + Math.cos(aa) * rr * 1.35);
+          cy = clampY(a.y + Math.sin(aa) * rr);
         }
       }
+      placed.push({ x: cx, y: cy, hs: hs });
 
       var tile = document.createElement('a');
       tile.className = 'tile';
