@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oghenefejiro Etemire — Renewable Energy Engineer</title>
+<meta name="description" content="Every energy project starts as a question. Three questions, three answers: a passive solar house, a 30 MW wind farm, and a photovoltaic-thermal system designed, simulated, and costed end to end.">
+<link rel="stylesheet" href="css/main.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>&#9788;</text></svg>">
+</head>
+<body class="no-js">
+<script>document.body.classList.remove('no-js')</script>
+
+<header class="top">
+  <a class="brand" href="index.html"><strong>Oghenefejiro Etemire</strong></a>
+  <nav>
+    <a href="about.html">About</a>
+    <a href="files/Etems-MSc-Dissertation-PVT-System.docx">Dissertation</a>
+    <a href="mailto:etemirefejiro.je@gmail.com">Contact</a>
+  </nav>
+</header>
+
+<div id="cosmos-wrap" aria-label="Map of projects. Drag to pan, scroll to zoom, click an image to open its project.">
+  <div id="cosmos">
+    <svg id="wires" aria-hidden="true"></svg>
+    <div class="giant" style="left:120px; top:90px;">Keep</div>
+    <div class="giant" style="left:1610px; top:1290px;">asking.</div>
+
+    <div class="q-node" id="q-house" style="left:330px; top:830px;">
+      <h2><a href="house.html">Can a house heat itself?</a></h2>
+      <p>A passive solar house, drawn in AutoCAD and proven in Polysun &mdash; design, simulation, and payback.</p>
+      <a class="go" href="house.html">Open the project</a>
+    </div>
+
+    <div class="q-node" id="q-wind" style="left:1060px; top:330px;">
+      <h2><a href="wind.html">Can wind pay for an island?</a></h2>
+      <p>A 30&thinsp;MW wind farm for Orkney &mdash; siting, noise, flicker, visibility, logistics, and a 20-year business case.</p>
+      <a class="go" href="wind.html">Open the project</a>
+    </div>
+
+    <div class="q-node" id="q-pvt" style="left:1700px; top:880px;">
+      <h2><a href="pvt.html">Why do solar panels hate the sun?</a></h2>
+      <p>MSc dissertation: a water-cooled photovoltaic-thermal panel, designed in SOLIDWORKS and proven with CFD.</p>
+      <a class="go" href="pvt.html">Open the project</a>
+    </div>
+  </div>
+</div>
+
+<div class="hud hint">Click an image to open its project</div>
+<div class="hud zoom">
+  <span>Zoom</span>
+  <button id="z-in" aria-label="Zoom in">+</button>
+  <button id="z-out" aria-label="Zoom out">&minus;</button>
+</div>
+
+<main id="mobile-home">
+  <p class="lede">Every energy project starts as a question.</p>
+
+  <a class="m-q" href="house.html">
+    <h2>Can a house heat itself?</h2>
+    <p>Passive solar house &mdash; AutoCAD design, Polysun proof.</p>
+    <div class="strip">
+      <img src="assets/img/house/thumbs/image13.jpg" alt="" loading="lazy">
+      <img src="assets/img/house/thumbs/image10.jpg" alt="" loading="lazy">
+      <img src="assets/img/house/thumbs/image28.jpg" alt="" loading="lazy">
+      <img src="assets/img/house/thumbs/image42.jpg" alt="" loading="lazy">
+    </div>
+  </a>
+
+  <a class="m-q" href="wind.html">
+    <h2>Can wind pay for an island?</h2>
+    <p>30&thinsp;MW Orkney wind farm &mdash; WindPRO analysis to bankable case.</p>
+    <div class="strip">
+      <img src="assets/img/wind/thumbs/image12.jpg" alt="" loading="lazy">
+      <img src="assets/img/wind/thumbs/image22.jpg" alt="" loading="lazy">
+      <img src="assets/img/wind/thumbs/image42.jpg" alt="" loading="lazy">
+      <img src="assets/img/wind/thumbs/image38.jpg" alt="" loading="lazy">
+    </div>
+  </a>
+
+  <a class="m-q" href="pvt.html">
+    <h2>Why do solar panels hate the sun?</h2>
+    <p>MSc dissertation &mdash; a water-cooled PVT panel proven with CFD.</p>
+    <div class="strip">
+      <img src="assets/img/pvt/thumbs/image30.jpg" alt="" loading="lazy">
+      <img src="assets/img/pvt/thumbs/image37.jpg" alt="" loading="lazy">
+      <img src="assets/img/pvt/thumbs/image43.jpg" alt="" loading="lazy">
+      <img src="assets/img/pvt/thumbs/image62.jpg" alt="" loading="lazy">
+    </div>
+  </a>
+</main>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="js/constellation.js"></script>
+</body>
+</html>

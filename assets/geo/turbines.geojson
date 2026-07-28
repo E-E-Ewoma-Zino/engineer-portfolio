@@ -1,0 +1,10 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  { "type": "Feature", "properties": { "kind": "turbine", "label": "WTG 1", "model": "Vestas V150-6.0 MW", "hub": "149.9 m", "tip": "224.9 m" }, "geometry": { "type": "Point", "coordinates": [-3.03977966308594, 59.0039314704678] } },
+  { "type": "Feature", "properties": { "kind": "turbine", "label": "WTG 2", "model": "Vestas V150-6.0 MW", "hub": "149.9 m", "tip": "224.9 m" }, "geometry": { "type": "Point", "coordinates": [-3.01758187089053, 59.0066892052033] } },
+  { "type": "Feature", "properties": { "kind": "turbine", "label": "WTG 3", "model": "Vestas V150-6.0 MW", "hub": "149.9 m", "tip": "224.9 m" }, "geometry": { "type": "Point", "coordinates": [-3.01006117221476, 59.0085186756423] } },
+  { "type": "Feature", "properties": { "kind": "turbine", "label": "WTG 4", "model": "Vestas V150-6.0 MW", "hub": "149.9 m", "tip": "224.9 m" }, "geometry": { "type": "Point", "coordinates": [-3.02676623114885, 59.0061163472176] } },
+  { "type": "Feature", "properties": { "kind": "turbine", "label": "WTG 5", "model": "Vestas V150-6.0 MW", "hub": "149.9 m", "tip": "224.9 m" }, "geometry": { "type": "Point", "coordinates": [-3.03557491252759, 59.008188965556] } }
+ ]
+}

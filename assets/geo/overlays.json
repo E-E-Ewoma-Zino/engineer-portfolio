@@ -1,0 +1,38 @@
+{
+ "noise": [
+  {
+   "name": "Layer - 12.0 m_s (raster)",
+   "href": "files\\{7D1D2C3A-75D7-4BFF-B097-CE66A26D9B06}OverLay.bmp",
+   "north": 59.03115810362,
+   "south": 58.98157585223,
+   "east": -2.96522671469,
+   "west": -3.083908113,
+   "rotation": 0.92910069752,
+   "color": "7affffff"
+  }
+ ],
+ "flicker": [
+  {
+   "name": "Layer - Hours per year, worst case (raster)",
+   "href": "files\\{B4D7D890-B3E5-464E-B9CC-F15A8FB841A4}OverLay.bmp",
+   "north": 59.02743943034,
+   "south": 58.98418431902,
+   "east": -2.97917055841,
+   "west": -3.06521702061,
+   "rotation": 0.91323889818,
+   "color": "7affffff"
+  }
+ ],
+ "zvi": [
+  {
+   "name": "Layer - Five New Installed Turbines Orkney Islands Scotland : Standard ZVI (raster)",
+   "href": "files\\{EB35249F-9BF4-4216-ABB0-367455A80CCF}OverLay.bmp",
+   "north": 59.05070964314,
+   "south": 58.96013007661,
+   "east": -2.93546507416,
+   "west": -3.11150731564,
+   "rotation": 0.95234767578,
+   "color": "7affffff"
+  }
+ ]
+}
