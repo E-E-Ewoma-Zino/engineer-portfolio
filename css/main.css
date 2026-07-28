@@ -127,20 +127,35 @@ a { color: inherit; }
 
 /* preview card (click a tile) */
 #card-backdrop {
-  display: none; position: fixed; inset: 0; z-index: 180;
+  position: fixed; inset: 0; z-index: 180;
   background: rgba(250, 249, 245, 0.82);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .38s ease, visibility 0s linear .38s;
 }
-body.card-open #card-backdrop { display: block; }
+body.card-open #card-backdrop {
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transition: opacity .38s ease;
+}
 
+#preview-card {
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transform: scale(0.9) translateY(26px);
+  transition:
+    opacity .26s ease,
+    transform .3s cubic-bezier(.4, 0, .7, .4),
+    visibility 0s linear .3s;
+}
+#preview-card.open {
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transform: scale(1) translateY(0);
+  transition:
+    opacity .3s ease,
+    transform .5s cubic-bezier(.3, 1.35, .45, 1);
+}
 #preview-card {
   position: fixed; z-index: 200; left: 50%; top: 50%;
   translate: -50% -50%;
   width: min(420px, calc(100vw - 40px));
-}
-#preview-card.pop { animation: card-pop .35s ease-out; }
-@keyframes card-pop {
-  from { opacity: 0; transform: scale(0.96); }
-  to   { opacity: 1; transform: scale(1); }
 }
 #preview-card {
   background: #fff; border: 1px solid var(--hair);

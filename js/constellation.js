@@ -166,15 +166,12 @@
     cardBlurb.textContent = m.blurb;
     cardGo.href = m.href;
     document.body.classList.add('card-open');
-    card.hidden = false;
-    card.classList.remove('pop');
-    void card.offsetWidth; /* restart the CSS pop animation */
-    card.classList.add('pop');
+    card.classList.add('open');
     cardGo.focus({ preventScroll: true });
   }
   function closeCard() {
     document.body.classList.remove('card-open');
-    card.hidden = true;
+    card.classList.remove('open');
   }
   cosmos.addEventListener('click', function (e) {
     var tile = e.target.closest('.tile');
