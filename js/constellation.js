@@ -33,8 +33,8 @@
   var giants = document.querySelectorAll('.giant');
   giants[0].style.left = (0.045 * W) + 'px';
   giants[0].style.top = (0.055 * H) + 'px';
-  giants[1].style.left = (0.660 * W) + 'px';
-  giants[1].style.top = (H - 300) + 'px';
+  giants[1].style.left = (0.395 * W) + 'px';
+  giants[1].style.top = (0.680 * H) + 'px';
 
   var picks = {
     house: [2, 3, 5, 7, 10, 11, 12, 13, 14, 22, 28, 29, 32, 38, 40, 42],
