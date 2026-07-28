@@ -87,8 +87,12 @@
     var s = Math.max(minScale * 0.85, Math.min(maxScale, scale));
     scale = s;
     var margin = 120 * s;
-    tx = Math.min(margin, Math.max(vw - W * s - margin, tx));
-    ty = Math.min(margin, Math.max(vh - H * s - margin, ty));
+    /* If the scaled canvas is smaller than the viewport on an axis, centre it there;
+       otherwise clamp panning so the content can't be dragged fully off-screen. */
+    if (W * s <= vw) { tx = (vw - W * s) / 2; }
+    else { tx = Math.min(margin, Math.max(vw - W * s - margin, tx)); }
+    if (H * s <= vh) { ty = (vh - H * s) / 2; }
+    else { ty = Math.min(margin, Math.max(vh - H * s - margin, ty)); }
     cosmos.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
   }
   apply();
