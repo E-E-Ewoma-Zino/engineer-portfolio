@@ -166,7 +166,7 @@
     apply();
   }
 
-  /* Wheel does NOT zoom (matches the reference flow) — zoom lives in the buttons only. */
+  /* Wheel does NOT zoom (matches the reference flow); zoom lives in the buttons only. */
   document.getElementById('z-in').addEventListener('click', function () { zoomAt(vw / 2, vh / 2, 1.28); });
   document.getElementById('z-out').addEventListener('click', function () { zoomAt(vw / 2, vh / 2, 0.78); });
 
@@ -206,9 +206,9 @@
 
   /* ---- click a tile -> preview card (reference flow) ---- */
   var meta = {
-    house: { kicker: 'Question 01 — Solar power engineering', title: 'Can a house heat itself?', blurb: 'A passive solar house for London: AutoCAD design, Polysun proof, 64.6% annual solar fraction.', href: 'house.html' },
-    wind:  { kicker: 'Question 02 — Wind power engineering', title: 'Can wind pay for an island?', blurb: 'Five Vestas V150s at Quanterness, Orkney: siting to £32.5M NPV, with the real WindPRO layers on a live map.', href: 'wind.html' },
-    pvt:   { kicker: 'Question 03 — MSc dissertation', title: 'Why do solar panels hate the sun?', blurb: 'A water-cooled PVT panel designed in SOLIDWORKS and proven with CFD — electricity and heat from the same square metre.', href: 'pvt.html' }
+    house: { kicker: 'Question 01 · Solar power engineering', title: 'Can a house heat itself?', blurb: 'A passive solar house for London: AutoCAD design, Polysun proof, 64.6% annual solar fraction.', href: 'house.html' },
+    wind:  { kicker: 'Question 02 · Wind power engineering', title: 'Can wind pay for an island?', blurb: 'Five Vestas V150s at Quanterness, Orkney: siting to £32.5M NPV, with the real WindPRO layers on a live map.', href: 'wind.html' },
+    pvt:   { kicker: 'Question 03 · MSc dissertation', title: 'Why do solar panels hate the sun?', blurb: 'A water-cooled PVT panel designed in SOLIDWORKS and proven with CFD: electricity and heat from the same square metre.', href: 'pvt.html' }
   };
   var card = document.getElementById('preview-card');
   var cardImg = card.querySelector('.pc-img');
@@ -242,7 +242,7 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeCard(); });
   document.getElementById('card-backdrop').addEventListener('click', closeCard);
 
-  /* gentle drift-in on load — opacity only, so it never fights the CSS float */
+  /* gentle drift-in on load: opacity only, so it never fights the CSS float */
   if (window.gsap) {
     gsap.from('.tile', { opacity: 0, duration: 0.8, ease: 'power1.out', stagger: { each: 0.015, from: 'random' }, clearProps: 'opacity' });
     gsap.from('.giant', { opacity: 0, duration: 1.1, ease: 'power1.out', stagger: 0.15, clearProps: 'opacity' });

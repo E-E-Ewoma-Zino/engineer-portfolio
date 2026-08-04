@@ -11,9 +11,9 @@
 
   var layers = {};
   var legends = {
-    noise: { img: 'assets/geo/noise_legend.png', cap: 'Predicted sound pressure at 12 m/s wind speed — WindPRO DECIBEL module' },
-    flicker: { img: 'assets/geo/flicker_legend.png', cap: 'Worst-case shadow flicker, hours per year — WindPRO SHADOW module' },
-    zvi: { img: 'assets/geo/zvi_legend.png', cap: 'Number of turbines visible — WindPRO ZVI module' }
+    noise: { img: 'assets/geo/noise_legend.png', cap: 'Predicted sound pressure at 12 m/s wind speed, WindPRO DECIBEL module' },
+    flicker: { img: 'assets/geo/flicker_legend.png', cap: 'Worst-case shadow flicker, hours per year, WindPRO SHADOW module' },
+    zvi: { img: 'assets/geo/zvi_legend.png', cap: 'Number of turbines visible, WindPRO ZVI module' }
   };
   var legendBox = document.getElementById('map-legend');
 
